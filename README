@@ -1,0 +1,39 @@
+# Sistema de Estacionamento - ATIVIDADE
+
+Projeto Spring Boot mínimo para controle de estacionamento da faculdade.
+
+Funcionalidades:
+- Registrar entrada de veículo (placa, modelo, marca, tipo, vaga, usuário que registrou)
+- Consultar vagas ocupadas, vagas livres e total de carros
+- Registrar saída de veículo (consulta por placa) e cálculo de cobrança por hora:
+  - Carro pequeno: R$16,00/h
+  - Carro grande: R$25,00/h
+  - Moto: R$8,00/h
+- Erros retornados em padrão JSON
+
+Como rodar:
+1. Ter Java 17+ e Maven instalados.
+2. Construir e rodar:
+   mvn clean package
+   java -jar target/atividade-0.0.1-SNAPSHOT.jar
+
+Endpoints (exemplos):
+- POST /api/parking/entry
+  {
+    "plate":"ABC-1234",
+    "brand":"Fiat",
+    "model":"Uno",
+    "type":"SMALL",
+    "spotNumber":1,
+    "registeredBy":"joao"
+  }
+
+- GET /api/parking/spots
+  Retorna vagas e status.
+
+- POST /api/parking/exit?plate=ABC-1234
+  Retorna JSON com entry, exit, hours, rate, total
+
+Observações:
+- A vaga não pode ser sobrescrita: tentar alocar uma vaga já ocupada retorna erro 409 com JSON de erro.
+- Para simplicidade não há autenticação; usuários são registrados pelo nome recebido nas requisições.
